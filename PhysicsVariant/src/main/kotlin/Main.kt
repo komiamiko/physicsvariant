@@ -69,6 +69,7 @@ class Main : Application() {
                 }
                 world = world.tick(0.033)
                 gamePanel.updateData(world)
+                gamePanel.tick()
                 gamePanel.paint()
             }
         };
