@@ -21,11 +21,12 @@ class Main : Application() {
         val keyState = KeyState(left = false, right = false, up = false, down = false, jump = false)
         val testGravity = Gravity(9.8, 7.0, keyState, GravityMode.LESS_IF_HOLDING_UP)
         val testDrag = Drag(0.1, DragMode.QUADRATIC_DRAG)
+        val testJump = Jump(4.0, 5.0, keyState, JumpMode.STRONGER_IF_HOLDING_UP)
         val testForces = listOf(testGravity, testDrag)
         val testSurfaces = listOf(Surface(-100.0, -2.0, 100.0, -2.0, true))
         val testLevel = Level(Box(1.0, 1.0, 0.0, 0.0, 0.0, 0.0, testForces, testSurfaces), Hitbox(50.0, -2.0, 54.0, 2.0), testSurfaces)
         val testIntegrator = RK4()
-        var world = World(keyState, testLevel, Box(1.0, 1.0, 0.0, 0.0, 0.0, 0.0, testForces, testSurfaces), testIntegrator, testGravity, testDrag)
+        var world = World(keyState, testLevel, Box(1.0, 1.0, 0.0, 0.0, 0.0, 0.0, testForces, testSurfaces), testIntegrator, testGravity, testDrag, testJump)
         var gamePanel = GamePanel()
         hb1.children.add(gamePanel)
         // set up UI
