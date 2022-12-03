@@ -9,10 +9,11 @@ data class Box(
     var y: Double,
     var vx: Double,
     var vy: Double,
-    var forces: List<Force>
+    var forces: List<Force>,
+    var surfaces: List<Surface>
 ): State<Box, BoxDelta> {
     override fun copy(): Box {
-        return Box(mass, radius, x, y, vx, vy, forces)
+        return Box(mass, radius, x, y, vx, vy, forces, surfaces)
     }
 
     override fun diff(): BoxDelta {
@@ -25,10 +26,24 @@ data class Box(
     }
 
     override fun iadd(by: BoxDelta) {
-        x += by.vx
-        y += by.vy
-        x += by.ax
-        y += by.ay
+        var collide: CollisionResult? = null
+        for(surface in surfaces) {
+            var icollide = surface.clamp(this, by)
+            if(icollide != null && (collide == null || icollide < collide)) {
+                collide = icollide
+            }
+        }
+        if(collide != null) {
+            x += by.vx * collide.fracMoved
+            y += by.vy * collide.fracMoved
+            vx = collide.newVx
+            vy = collide.newVy
+        } else {
+            x += by.vx
+            y += by.vy
+            vx += by.ax
+            vy += by.ay
+        }
     }
 
 }
