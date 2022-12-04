@@ -47,13 +47,13 @@ class GamePanel: Canvas() {
         gc.fill = Color.BLUE
         gc.fillRect(
             (world.player.x - world.player.radius) * xmul + xadd,
-            (world.player.y - world.player.radius) * ymul + yadd,
+            (world.player.y + world.player.radius) * ymul + yadd,
             world.player.radius * 2 * xmul,
             -world.player.radius * 2 * ymul
         )
         gc.strokeRect(
             (world.player.x - world.player.radius) * xmul + xadd,
-            (world.player.y - world.player.radius) * ymul + yadd,
+            (world.player.y + world.player.radius) * ymul + yadd,
             world.player.radius * 2 * xmul,
             -world.player.radius * 2 * ymul
         )
