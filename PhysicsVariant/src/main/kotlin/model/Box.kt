@@ -34,8 +34,8 @@ data class Box(
             }
         }
         if(collide != null) {
-            x += by.vx * collide.fracMoved
-            y += by.vy * collide.fracMoved
+            x += by.vx * collide.fracMoved + (1 - collide.fracMoved) * collide.newVx
+            y += by.vy * collide.fracMoved + (1 - collide.fracMoved) * collide.newVy
             vx = collide.newVx
             vy = collide.newVy
         } else {
