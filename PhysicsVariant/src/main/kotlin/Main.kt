@@ -1,6 +1,7 @@
 import game.Hitbox
 import game.Level
 import game.World
+import integrators.Euler
 import integrators.RK4
 import javafx.application.Application
 import javafx.event.EventHandler
@@ -23,15 +24,17 @@ class Main : Application() {
         val testGravity = Gravity(15.0, 1.0, keyState, GravityMode.LESS_IF_HOLDING_UP)
         val testDrag = Drag(0.1, DragMode.QUADRATIC_DRAG)
         val testJump = Jump(15.0, 22.0, keyState, JumpMode.STRONGER_IF_HOLDING_UP)
-        val testWalk = Walk(60.0)
-        val testFriction = Friction(30.0)
+        val testWalk = Walk(6.0)
+        val testFriction = Friction(3.0)
         val testForces = listOf(testGravity, testDrag)
         val testSurfaces = listOf(
             Surface(-100.0, -2.0, 10.0, -2.0, true),
             Surface(10.0, -2.0, 10.0, 1.0),
             Surface(10.0, 1.0, 15.0, 1.0, true),
-            Surface(15.0, 1.0, 25.0, -2.0, true),
-            Surface(25.0, -2.0, 100.0, -2.0, true)
+            Surface(15.0, 1.0, 20.0, 4.0),
+            Surface(20.0, 4.0, 25.0, 4.0, true),
+            Surface(25.0, 4.0, 35.0, -2.0, true),
+            Surface(35.0, -2.0, 100.0, -2.0, true)
         )
         val testLevel = Level(Box(1.0, 1.0, 0.0, 0.0, 0.0, 0.0, testForces, testSurfaces), Hitbox(50.0, -2.0, 54.0, 2.0), testSurfaces)
         val testIntegrator = RK4()

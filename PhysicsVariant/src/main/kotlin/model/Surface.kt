@@ -71,17 +71,19 @@ data class Surface(
             }
         }
         // project original velocity onto surface tangent vector
-        val dotv = (boxDelta.vx * dirX + boxDelta.vy * dirY) / dirMag2
+        val fvx = box.vx + boxDelta.ax
+        val fvy = box.vy + boxDelta.ay
+        val dotv = (fvx * dirX + fvy * dirY) / dirMag2
         val newVx = dirX * dotv
         val newVy = dirY * dotv
         // ignore collision if moving away
-        val x3 = x1 - boxDelta.vx * lt
-        val y3 = y1 - boxDelta.vy * lt
+        val x3 = x1 - fvx * lt
+        val y3 = y1 - fvy * lt
         val dotNorm = (dirX * (box.x - x3) + dirY * (box.y - y3)) / dirMag2
         val npfac = min(1.0, max(0.0, dotNorm))
         val nearestX = x3 + npfac * dirX
         val nearestY = y3 + npfac * dirY
-        val dotnv = boxDelta.vx * (box.x - nearestX) + boxDelta.vy * (box.y - nearestY)
+        val dotnv = fvx * (box.x - nearestX) + fvy * (box.y - nearestY)
         if(dotnv >= 0) return null
         return CollisionResult(lt, newVx, newVy)
     }
