@@ -22,8 +22,8 @@ class Main : Application() {
         // setup test level
         val keyState = KeyState(left = false, right = false, up = false, down = false, jump = false)
         val testGravity = Gravity(15.0, 1.0, keyState, GravityMode.LESS_IF_HOLDING_UP)
-        val testDrag = Drag(0.1, DragMode.QUADRATIC_DRAG)
-        val testJump = Jump(15.0, 22.0, keyState, JumpMode.STRONGER_IF_HOLDING_UP)
+        val testDrag = Drag(0.3, DragMode.QUADRATIC_DRAG)
+        val testJump = Jump(15.0, 35.0, keyState, JumpMode.STRONGER_IF_HOLDING_UP)
         val testWalk = Walk(6.0)
         val testFriction = Friction(3.0)
         val testForces = listOf(testGravity, testDrag)
@@ -77,6 +77,9 @@ class Main : Application() {
                         keyState.up = ke.isdown
                     } else if(ke.code == KeyCode.J) {
                         keyState.jump = ke.isdown
+                    } else if(ke.code == KeyCode.K && ke.isdown) {
+                        // change drag mode
+                        testDrag.mode = if(testDrag.mode == DragMode.QUADRATIC_DRAG) DragMode.LINEAR_DRAG else DragMode.QUADRATIC_DRAG
                     }
                 }
                 world = world.tick(0.033)

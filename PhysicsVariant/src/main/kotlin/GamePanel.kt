@@ -1,6 +1,7 @@
 import game.World
 import javafx.scene.canvas.Canvas
 import javafx.scene.paint.Color
+import model.DragMode
 import kotlin.math.hypot
 import kotlin.math.tanh
 
@@ -77,6 +78,10 @@ class GamePanel: Canvas() {
             world.player.radius * 0.3 * xmul,
             -world.player.radius * ymul
         )
+        val dragText = if(world.drag.mode == DragMode.QUADRATIC_DRAG) "Drag: quadratic" else "Drag: linear"
+        gc.fillText(dragText, 10.0, 15.0)
+        val coordText = world.player.x.toString() + ", " + world.player.y
+        gc.fillText(coordText, 10.0, 30.0)
     }
 
 }
